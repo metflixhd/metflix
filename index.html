@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metflix</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#141414;
+color:white;
+}
+
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px;
+background:black;
+}
+
+header h1{
+color:#e50914;
+margin:0;
+font-size:30px;
+}
+
+input{
+padding:10px;
+border:none;
+border-radius:25px;
+background:#222;
+color:white;
+width:140px;
+outline:none;
+}
+
+.section{
+padding:15px;
+}
+
+.row{
+display:flex;
+overflow-x:auto;
+gap:15px;
+padding-bottom:10px;
+}
+
+.row::-webkit-scrollbar{
+height:6px;
+}
+
+.row::-webkit-scrollbar-thumb{
+background:#444;
+border-radius:10px;
+}
+
+.card{
+min-width:180px;
+background:#1c1c1c;
+border-radius:12px;
+overflow:hidden;
+flex-shrink:0;
+cursor:pointer;
+transition:transform .25s ease,
+box-shadow .25s ease;
+}
+
+.card:hover{
+transform:scale(1.05);
+box-shadow:0 0 15px rgba(229,9,20,.6);
+}
+
+.card:active{
+transform:scale(0.95);
+}
+
+.card img{
+width:100%;
+height:210px;
+object-fit:cover;
+}
+
+.info{
+padding:12px;
+}
+
+.info h3{
+margin:0;
+font-size:14px;
+}
+
+.sinopse{
+font-size:11px;
+color:#aaa;
+margin-top:8px;
+height:32px;
+overflow:hidden;
+}
+
+.btn{
+background:#111;
+border:1px solid #e50914;
+padding:8px;
+border-radius:5px;
+text-align:center;
+cursor:pointer;
+margin-top:8px;
+font-size:12px;
+color:white;
+}
+
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>METFLIX</h1>
+
+<input
+id="search"
+placeholder="Buscar..."
+>
+
+</header>
+
+
+<div class="section">
+
+<h2>Filmes</h2>
+
+<div class="row" id="filmes"></div>
+
+</div>
+
+
+<div class="section">
+
+<h2>Séries</h2>
+
+<div class="row" id="series"></div>
+
+</div>
+
+
+<div class="section">
+
+<h2>Animes</h2>
+
+<div class="row" id="animes"></div>
+
+</div>
+
+
+<script>
+
+const filmes=[
+
+{
+
+nome:"Olhos Famintos",
+
+img:"https://image.tmdb.org/t/p/original/4deKiUXWqyATIEKCBSjRxCOLvu0.jpg",
+
+sinopse:"Uma criatura misteriosa desperta a cada 23 anos.",
+
+pagina:"olhos-famintos.html"
+
+},
+
+{
+
+nome:"Espartalhões",
+
+img:"https://image.tmdb.org/t/p/original/aTxMDhNrC9Y7ahvixh71BWqPh4O.jpg",
+
+sinopse:"Uma sátira com humor exagerado e desafios absurdos.",
+
+pagina:"espartalhoes.html"
+
+}
+
+];
+
+const series=[];
+
+const animes=[];
+
+
+function criarCard(item){
+
+return `
+
+<div class="card"
+onclick="window.location.href='${item.pagina}'">
+
+<img src="${item.img}">
+
+<div class="info">
+
+<h3>${item.nome}</h3>
+
+<p class="sinopse">
+${item.sinopse}
+</p>
+
+<div class="btn">
+
+▶ Assistir
+
+</div>
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+function render(){
+
+document.getElementById("filmes")
+.innerHTML=
+
+filmes.map(criarCard)
+.join("");
+
+document.getElementById("series")
+.innerHTML=
+
+series.map(criarCard)
+.join("");
+
+document.getElementById("animes")
+.innerHTML=
+
+animes.map(criarCard)
+.join("");
+
+}
+
+render();
+
+
+document.getElementById(
+"search"
+).addEventListener(
+
+"input",
+
+function(){
+
+let valor=
+this.value.toLowerCase();
+
+document.getElementById(
+"filmes"
+).innerHTML=
+
+filmes
+.filter(f=>
+
+f.nome.toLowerCase()
+.includes(valor)
+
+)
+
+.map(criarCard)
+.join("");
+
+});
+
+</script>
+
+</body>
+</html>
